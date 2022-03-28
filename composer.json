@@ -1,0 +1,18 @@
+{
+    "name": "salvacheung/container",
+    "require": {
+        "psr/container": "^2.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Salvacheung\\Container\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "salva cheung",
+            "email": "salva.cheung@outlook.com"
+        }
+    ]
+}
