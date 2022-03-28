@@ -9,7 +9,7 @@ function api($name = null)
 {
     $app = Application::getInstance();
     if ($name) {
-        return $app->make($name);
+        return $app[$name];
     } else {
         return $app;
     }
@@ -18,5 +18,6 @@ function api($name = null)
 
 
 $word = api()->version();
+
 
 var_dump($word);

@@ -5,8 +5,9 @@ namespace Salvacheung\Container\Container;
 use Salvacheung\Container\Contracts\ContainerException;
 use InvalidArgumentException;
 use Salvacheung\Container\Contracts\Container as ContainerContract;
+use ArrayAccess;
 
-class Container implements ContainerContract
+class Container implements ContainerContract, ArrayAccess
 {
     protected static $instance;
 
@@ -174,5 +175,50 @@ class Container implements ContainerContract
         }
 
         return $this->make($id);
+    }
+
+    /**
+     *
+     * @param $offset
+     * @return bool
+     * @author Salva Cheung <salva.cheung@outlook.com>
+     */
+    public function offsetExists($offset)
+    {
+        return $this->bound($offset);
+    }
+
+    /**
+     *
+     * @param $offset
+     * @return mixed
+     * @author Salva Cheung <salva.cheung@outlook.com>
+     */
+    public function offsetGet($offset)
+    {
+        return $this->make($offset);
+    }
+
+    /**
+     *
+     * @param $offset
+     * @param $value
+     * @return void
+     * @author Salva Cheung <salva.cheung@outlook.com>
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->injection($offset, $value);
+    }
+
+    /**
+     *
+     * @param $offset
+     * @return void
+     * @author Salva Cheung <salva.cheung@outlook.com>
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->bounds[$offset]);
     }
 }
