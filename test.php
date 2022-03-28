@@ -3,9 +3,11 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Salvacheung\Container\Application;
+
 function api($name = null)
 {
-    $app = new \Salvacheung\Container\Application();
+    $app = Application::getInstance();
     if ($name) {
         return $app->make($name);
     } else {

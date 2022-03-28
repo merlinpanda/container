@@ -147,7 +147,7 @@ class Container implements ContainerContract
         return isset($this->bounds[$id]);
     }
 
-    public function getInstance()
+    public static function getInstance()
     {
         if (is_null(static::$instance)){
             static::$instance = new static;
