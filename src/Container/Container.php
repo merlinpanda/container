@@ -177,6 +177,40 @@ class Container implements ContainerContract, ArrayAccess
         return $this->make($id);
     }
 
+    public function isAlias(string $class): bool
+    {
+        return $class !== (new \ReflectionClass($class))->name;
+    }
+
+    public function getAliases(string $class): ?array
+    {
+        static $classes = [];
+        if (! class_exists($class, true)) {
+            throw new InvalidArgumentException('class `' . $class . '` not exist');
+        }
+
+        $newClasses = array_diff(get_declared_classes(), array_keys($classes));
+
+        if ($newClasses) {
+            $abc = range('a','z');
+            foreach ($newClasses as $newClass) {
+                if (in_array($newClass[0], $abc, true)) {
+                    $classname = (new \ReflectionClass($newClass))->getName();
+                    $classes[$newClass] = $classname !== $newClass ? $classname : null;
+                }else{
+                    $classes[$newClass] = null;
+                }
+            }
+            unset($abc, $newClasses);
+        }
+
+        if (! empty($classes[$class])) {
+            throw new InvalidArgumentException($class .' is alias for class ' . $classes[$class]);
+        }
+
+        return array_keys($classes,$class,true);
+    }
+
     /**
      *
      * @param $offset
