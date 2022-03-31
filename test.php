@@ -5,6 +5,10 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Salvacheung\Container\Application;
 
+class FF {}
+
+class_alias('FF','CC');
+
 function api($name = null)
 {
     $app = Application::getInstance();
@@ -15,9 +19,14 @@ function api($name = null)
     }
 }
 
+$version = api()->version(); // return '0.0.1'
+var_dump($version);
 
+$aliases = api()->getAliases('FF'); // return ['cc']
+var_dump($aliases);
 
-$word = api()->version();
+$is_alias = api()->isAlias('FF'); // return false
+var_dump($is_alias);
 
-
-var_dump($word);
+$hello = api('notify')->sayHello(); // return hello
+var_dump($hello);
